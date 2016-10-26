@@ -67,8 +67,9 @@ def SUM(number):
     for elem in numb:
         if type(elem) == int:
             temp_numb += elem
+        else:
+            continue
     return temp_numb
-
 
 def SPAM(number):
     return str('egg'*number)
