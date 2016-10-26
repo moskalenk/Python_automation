@@ -48,18 +48,19 @@ def autocomplete(text, char_slice):
     else:
         return _list
 
-def TO_WEIRD(str_text):
-    str_temp = ""
-    for elem in str_text:
-        pos_elem = str_text.index(elem)
-        if pos_elem % 2 != 0:
-            str_temp += elem
-            string.capwords(str_temp)
-        else:
-            up_elem = elem.upper()
-            str_temp += up_elem
-            string.capwords(str_temp)
-    return str_temp
+# def TO_WEIRD(str_text):
+#
+#     str_temp = ""
+#     for elem in str_text:
+#         pos_elem = str_text.index(elem)
+#         if pos_elem % 2 != 0:
+#             str_temp += elem
+#             string.capwords(str_temp)
+#         else:
+#             up_elem = elem.upper()
+#             str_temp += up_elem
+#             string.capwords(str_temp)
+#     return str_temp
 
 def SUM(number):
     numb = (number)
@@ -73,3 +74,5 @@ def SUM(number):
 
 def SPAM(number):
     return str('egg'*number)
+
+print(TO_WEIRD("Helo my friend"))
