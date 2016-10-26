@@ -1,5 +1,7 @@
-text = ['Airplane','air12port','apple','ball', 'air3284_*gun','airsort','aidoos','aimag']
 
+import string
+
+# text = ['Airplane','air12port','apple','ball', 'air3284_*gun','airsort','aidoos','aimag']
 def vowels_count(text):
     litters = {}
     vowels = ("a", "e", "o", "y", "u", "i")
@@ -27,7 +29,7 @@ def not_alpha_list(text):
             alpha.append(elem)
     return alpha
 
-def convert_to_str():
+def only_alphabet(text):
     correct = []
     for elem in not_alpha_list(text):
         elem = str(elem)
@@ -38,7 +40,7 @@ def convert_to_str():
 
 def autocomplete(text, char_slice):
     _list = [elem for elem in text if elem.isalpha() if char_slice in elem]
-    for i in convert_to_str():
+    for i in only_alphabet(text):
         _list.append(i)
     if len(_list) > 5:
         end_list = _list[0:5]
@@ -46,4 +48,27 @@ def autocomplete(text, char_slice):
     else:
         return _list
 
-print(autocomplete(text, "ai"))
+def TO_WEIRD(str_text):
+    str_temp = ""
+    for elem in str_text:
+        pos_elem = str_text.index(elem)
+        if pos_elem % 2 != 0:
+            str_temp += elem
+            string.capwords(str_temp)
+        else:
+            up_elem = elem.upper()
+            str_temp += up_elem
+            string.capwords(str_temp)
+    return str_temp
+
+def SUM(number):
+    numb = (number)
+    temp_numb = 0
+    for elem in numb:
+        if type(elem) == int:
+            temp_numb += elem
+    return temp_numb
+
+
+def SPAM(number):
+    return str('egg'*number)
