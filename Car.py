@@ -69,18 +69,19 @@ class Cars:
         self.mileage_utilisation = 0 #осталось пробега до утилизации
         self.count_repair = 0
         self.km_on_one_tank = 0
-        self.temp_param_fuel = 0
-
+        self.temp_fuel_flow = 0
 
         Cars.all_cars.append(self)
 
     # def param_for_fuel(self, procent=0.01):
     #     temp_list = []
     #     for elem in range(self.route_lenght):
-    #         if elem != 0 and elem % 2 == 0:
+    #         if elem != 0 and elem % 1000 == 0:
     #             temp = self.fuel_flow * procent
     #             self.fuel_flow += temp
-
+    #             temp_list.append(self.fuel_flow)
+    #     a = temp_list[-1]
+    #     self.temp_fuel_flow = a
 
     def capremont(self):
         self.count_repair = self.route_lenght // self.max_mileage
@@ -120,10 +121,10 @@ for elem in Cars.all_cars:
      elem.filling_car()
      elem.money_for_filling_car()
      elem.price_vs_km()
-     # elem.param_for_fuel()
+     elem.param_for_fuel()
 
 for i in Cars.all_cars:
-    print(i.__dict__)
+    print(i.temp_fuel_flow)
     # print(i.count_repair, end=", ")
 
 
