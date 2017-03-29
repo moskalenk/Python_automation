@@ -1,7 +1,7 @@
 import random
 
 
-class Fuel:
+class Fuel: # выноси в отдельный модуль
     class Petrol:
         ENGINE_TYPE = 'petrol'
         PETROL_PRICE = 2.4
@@ -69,6 +69,7 @@ class Cars(CarSettings):
     all_cars = []
 
     def __init__(self, price=10000):
+        # super для инициализации CarSettings, иначе наследоване лишнее
         self.engine = CarSettings.engine_type(len(Cars.all_cars))
         self.fuel_tank = CarSettings.fuel_tank(len(Cars.all_cars))
         self.price = price
@@ -129,20 +130,18 @@ class Cars(CarSettings):
     def money_for_fuel(self):
         if self.engine == Fuel.Diesel.ENGINE_TYPE:
             money = Fuel.Diesel.DIESEL_PRICE
-            all_money = money * self.fuel_tank * self.count_filling_car
         else:
-            money = Fuel.Petrol.PETROL_PRICE
-            all_money = money * self.fuel_tank * self.count_filling_car
-        return all_money
+            money = Fuel.Petrol.PETROL_PRICE # getattr(fuel_type)... завтра напомни раскажу
+        return money * self.fuel_tank * self.count_filling_car
 
 
 def out_and_sort():
     for car in range(100):
         car_obj = Cars()
-    diesel_after_run = []
+    diesel_after_run = [] # sort или filter для всех машин - и нужен только один массив
     petrol_after_run = []
-    n = 0
-    for elem in Cars.all_cars:
+    
+    for n, elem in enumerate(Cars.all_cars):
         elem.run()
         print("I'm the {} car".format(n + 1))
         print("my path is {} km".format(elem.tachograph()))
@@ -152,7 +151,6 @@ def out_and_sort():
             diesel_after_run.append(elem)
         else:
             petrol_after_run.append(elem)
-        n += 1
     diesel_after_run.sort(key=lambda element: element.remaining_value)
 
 out_and_sort()
