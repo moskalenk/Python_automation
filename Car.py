@@ -4,7 +4,7 @@ import random
 class Fuel:
     class Petrol:
         ENGINE_TYPE = 'petrol'
-        PETROL_PRICE = 2.4
+        FUEL_PRICE = 2.4
         MAX_MILEAGE = 100000
         FUEL_FLOW = 8
         REPAIR_PRICE = 500
@@ -13,7 +13,7 @@ class Fuel:
 
     class Diesel:
         ENGINE_TYPE = 'diesel'
-        DIESEL_PRICE = 1.8
+        FUEL_PRICE = 1.8
         MAX_MILEAGE = 150000
         FUEL_FLOW = 6
         REPAIR_PRICE = 700
@@ -25,9 +25,9 @@ class CarSettings:
     @staticmethod
     def engine_type(number, num=3):
         if (number + 1) % num == 0:
-            engine = Fuel.Diesel.ENGINE_TYPE
+            engine = Fuel.Diesel
         else:
-            engine = Fuel.Petrol.ENGINE_TYPE
+            engine = Fuel.Petrol
         return engine
 
     @staticmethod
@@ -39,30 +39,17 @@ class CarSettings:
         return fuel_tank
 
     def max_mileage(self):
-        if self.engine_type(len(Cars.all_cars)) == Fuel.Diesel.ENGINE_TYPE:
-            max_mileage = Fuel.Diesel.MAX_MILEAGE
-        else:
-            max_mileage = Fuel.Petrol.MAX_MILEAGE
-        return max_mileage
+        return self.engine_type(len(Cars.all_cars)).MAX_MILEAGE
 
     def fuel_flow(self):
-        if self.engine_type(len(Cars.all_cars)) == Fuel.Diesel.ENGINE_TYPE:
-            fuel_flow = Fuel.Diesel.FUEL_FLOW
-        else:
-            fuel_flow = Fuel.Petrol.FUEL_FLOW
-        return fuel_flow
+        return self.engine_type(len(Cars.all_cars)).FUEL_FLOW
 
     def repair_price(self):
-        if self.engine_type(len(Cars.all_cars)) == Fuel.Diesel.ENGINE_TYPE:
-            price = Fuel.Diesel.REPAIR_PRICE
-        else:
-            price = Fuel.Petrol.REPAIR_PRICE
-        return price
+        return self.engine_type(len(Cars.all_cars)).REPAIR_PRICE
 
     @staticmethod
     def route_length():
-        route = random.randint(55000, 286000)
-        return route
+        return random.randint(55000, 286000)
 
 
 class Cars(CarSettings):
@@ -86,34 +73,21 @@ class Cars(CarSettings):
         Cars.all_cars.append(self)
 
     def money_for_repair(self):
-        if self.engine == Fuel.Diesel.ENGINE_TYPE:
-            money = Fuel.Diesel.REPAIR_PRICE
-        else:
-            money = Fuel.Petrol.REPAIR_PRICE
-        return money
+        return self.engine.REPAIR_PRICE
 
     def km_on_tank(self, length_km=100):
-        km = (self.fuel_tank / self.fuel_flow) * length_km
-        return km
+        return (self.fuel_tank / self.fuel_flow) * length_km
 
     def money_for_filling_car(self):
-        if self.engine == Fuel.Diesel.ENGINE_TYPE:
-            money = self.fuel_tank * Fuel.Diesel.DIESEL_PRICE
-        else:
-            money = self.fuel_tank * Fuel.Petrol.PETROL_PRICE
-        return money
+        return self.fuel_tank * self.engine.FUEL_PRICE
 
     def run(self):
         km = 0
         while km < self.route_length:
             km += 1
             if km % 1000 == 0:
-                if self.engine == Fuel.Diesel.ENGINE_TYPE:
-                    self.remaining_value -= Fuel.Diesel.PRICE_DECREASE
-                    self.fuel_flow += self.fuel_flow * Fuel.Diesel.FUEL_FLOW_INCREASE
-                else:
-                    self.remaining_value -= Fuel.Petrol.PRICE_DECREASE
-                    self.fuel_flow += self.fuel_flow * Fuel.Petrol.FUEL_FLOW_INCREASE
+                self.remaining_value -= self.engine.PRICE_DECREASE
+                self.fuel_flow += self.fuel_flow * self.engine.FUEL_FLOW_INCREASE
             if km % self.km_on_one_tank == 0:
                 self.count_filling_car += 1
                 self.money_spent += self.money_for_filling_car()
@@ -127,13 +101,8 @@ class Cars(CarSettings):
         return self.run
 
     def money_for_fuel(self):
-        if self.engine == Fuel.Diesel.ENGINE_TYPE:
-            money = Fuel.Diesel.DIESEL_PRICE
-            all_money = money * self.fuel_tank * self.count_filling_car
-        else:
-            money = Fuel.Petrol.PETROL_PRICE
-            all_money = money * self.fuel_tank * self.count_filling_car
-        return all_money
+        money = self.engine.FUEL_PRICE
+        return money * self.fuel_tank * self.count_filling_car
 
 
 def out_and_sort():
@@ -154,5 +123,6 @@ def out_and_sort():
             petrol_after_run.append(elem)
         n += 1
     diesel_after_run.sort(key=lambda element: element.remaining_value)
+
 
 out_and_sort()
