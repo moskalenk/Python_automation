@@ -1,25 +1,5 @@
 import random
-
-
-class Fuel:
-    class Petrol:
-        ENGINE_TYPE = 'petrol'
-        FUEL_PRICE = 2.4
-        MAX_MILEAGE = 100000
-        FUEL_FLOW = 8
-        REPAIR_PRICE = 500
-        PRICE_DECREASE = 9.5
-        FUEL_FLOW_INCREASE = 0.01
-
-    class Diesel:
-        ENGINE_TYPE = 'diesel'
-        FUEL_PRICE = 1.8
-        MAX_MILEAGE = 150000
-        FUEL_FLOW = 6
-        REPAIR_PRICE = 700
-        PRICE_DECREASE = 10.5
-        FUEL_FLOW_INCREASE = 0.01
-
+from Fuel_constants import Fuel
 
 class CarSettings:
     @staticmethod
@@ -56,13 +36,13 @@ class Cars(CarSettings):
     all_cars = []
 
     def __init__(self, price=10000):
-        self.engine = CarSettings.engine_type(len(Cars.all_cars))
-        self.fuel_tank = CarSettings.fuel_tank(len(Cars.all_cars))
+        self.engine = super().engine_type(len(Cars.all_cars))
+        self.fuel_tank = super().fuel_tank(len(Cars.all_cars))
         self.price = price
-        self.max_mileage = CarSettings.max_mileage(self)
-        self.fuel_flow = CarSettings.fuel_flow(self)
-        self.repair_price = CarSettings.repair_price(self)
-        self.route_length = CarSettings.route_length()
+        self.max_mileage = super().max_mileage()
+        self.fuel_flow = super().fuel_flow()
+        self.repair_price = super().repair_price()
+        self.route_length = super().route_length()
         self.km_on_one_tank = self.km_on_tank()
         self.count_filling_car = 0  # кол-во заправок
         self.count_repair = 0  # кол-во капремонтов
